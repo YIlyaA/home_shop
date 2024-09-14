@@ -24,6 +24,10 @@ class Products(models.Model):
     category = models.ForeignKey(to=Categories, on_delete=models.CASCADE) 
 
 
+    class Meta:
+        ordering = ("id",)
+
+
     def __str__(self):
         return f'{self.name} Quantity - {self.quantity}'
     
