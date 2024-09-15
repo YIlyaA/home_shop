@@ -17,7 +17,7 @@ def catalog(request, category_slug=None):
     elif query:
         goods = q_search(query)
     else:
-        goods = get_object_or_404(Products.objects.filter(category__slug=category_slug))
+        goods = get_list_or_404(Products.objects.filter(category__slug=category_slug))
     
 
     if on_sale:
