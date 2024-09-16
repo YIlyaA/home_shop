@@ -13,7 +13,7 @@
                     <form actions="{% url "users:login" %}" method="post">
                         {% csrf_token %}
 
-                        {% comment %} THE FIRST WAY TO DO LOGINIG IN {% endcomment %}
+                        {% comment %} THE FIRST WAY TO DO LOGINIG IN (also the 0 way it's without for loop){% endcomment %}
                         {% comment %}
                         {% for item in form %}
                             <div class="mb-3">
