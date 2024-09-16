@@ -12,6 +12,10 @@
 
                     <form actions="{% url "users:login" %}" method="post">
                         {% csrf_token %}
+                        
+                        {% if request.GET.next %}
+                            <input type="hidden" name="text" value={{request.GET.next}}>
+                        {% endif %}
 
                         {% comment %} THE FIRST WAY TO DO LOGINIG IN (also the 0 way it's without for loop){% endcomment %}
                         {% comment %}
