@@ -1,14 +1,26 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from goods.models import Products
+from carts.models import Cart
 
-# Create your views here.
+def cart_add(request, product_slug):
+    product = Products.objects.get(slug=product_slug)
 
-def cart_add(request, product_id):
+    if request.user.is_authenticated:
+        carts = Cart.objects.filter(user=request.user, product=product)
+
+        if carts.exists():
+            cart = carts.first()
+            if cart:
+                cart.quantity += 1
+                cart.save()
+        else:
+            Cart.objects.create(user=request.user, product=product, quantity=1)
+
+    return redirect(request.META['HTTP_REFERER'])  #вернет на ту страницу с которой и положил предмет в карзину
+
+def cart_change(request, product_slug):
     ...
 
 
-def cart_change(request, product_id):
-    ...
-
-
-def cart_remove(request, product_id):
+def cart_remove(request, product_slug):
     ...
