@@ -2,8 +2,11 @@
 {% load static %}
 {% load goods_tags %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block modal_cart %}
+{% include "includes/cart_button.html" %}
+{% endblock modal_cart %}
+
+
 
 {% block title %}
     <title>Catalog</title>
