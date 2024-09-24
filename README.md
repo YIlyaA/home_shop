@@ -1,4 +1,4 @@
-# home_shop
+# home shop
 HOME Furniture Store
 
 ## Installation procedure (using command line/pipenv)
