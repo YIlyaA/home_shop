@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.contrib import auth, messages
 from django.urls import reverse
 
+from carts.models import Cart
 from users.forms import UserLoginForm, UserRegistrationForm, ProfileForm
 
 
@@ -15,9 +16,15 @@ def login(request):
             username = request.POST['username']    
             password = request.POST['password']    
             user = auth.authenticate(username=username, password=password)
+
+            session_key = request.session.session_key          # чтобы корзина не сбрасывалась для незарег пользователя
+            
             if user:
                 auth.login(request, user)
                 messages.success(request, f"{username}, Now you are log in!")
+
+                if session_key:                                # чтобы корзина не сбрасывалась для незарег пользователя
+                    Cart.objects.filter(session_key=session_key).update(user=user)      # чтобы корзина не сбрасывалась для незарег пользователя
 
                 redirect_page = request.POST.get('next', None)
                 if redirect_page and redirect_page != reverse('user:logout'):
@@ -39,8 +46,15 @@ def registration(request):
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
             form.save()
+
+            session_key = request.session.session_key    # чтобы корзина не сбрасывалась для незарег пользователя
+
             user = form.instance
             auth.login(request, user)
+
+            if session_key:                               # чтобы корзина не сбрасывалась для незарег пользователя
+                Cart.objects.filter(session_key=session_key).update(user=user)       # чтобы корзина не сбрасывалась для незарег пользователя
+
             messages.success(request, f"{user.username}, registration was successful")
             return HttpResponseRedirect(reverse('main:index'))  # Функция reverse преобразует 'main:index' в url и перенаправляет 
     else:
