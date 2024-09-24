@@ -2,7 +2,7 @@
 HOME Furniture Store
 
 ## Installation procedure (using command line/pipenv)
--(also you can use requirements.txt or pipenv)
+(also you can use requirements.txt or pipenv)
 ```
 > pipenv shell
 > pipenv install
